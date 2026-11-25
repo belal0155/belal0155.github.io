@@ -1,164 +1,263 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Belal Mahmoud — Data Science</title>
-<meta name="description" content="Portfolio of Belal Mahmoud, data science student. Customer churn analysis with Python, SQL and machine learning.">
+<title>Belal Mahmoud | Data Science Portfolio</title>
+<meta name="description" content="Portfolio of Belal Mahmoud, data science student. Projects in Python, SQL, EDA and machine learning.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Belal Mahmoud | Data Science Portfolio">
+<meta property="og:description" content="Data science student. Projects in Python, SQL, EDA and machine learning.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
+  :root {
+    --bg:#07070f; --surface:rgba(255,255,255,.035); --line:rgba(255,255,255,.09);
+    --text:#eef0f8; --muted:#9a9db5; --brand:#7c5cff; --brand2:#00d4b8; --brand3:#ff5c8a;
+  }
   * { margin:0; padding:0; box-sizing:border-box; }
   html { scroll-behavior:smooth; }
-  body {
-    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
-    background:#0a0a12; color:#e8e8f0; overflow-x:hidden;
-  }
-  /* floating background blobs */
-  .blob { position:fixed; border-radius:50%; filter:blur(90px); opacity:.35; z-index:0; pointer-events:none; }
-  .b1 { width:480px; height:480px; background:#6c3df5; top:-120px; left:-120px; animation:drift1 22s ease-in-out infinite alternate; }
-  .b2 { width:420px; height:420px; background:#00c9a7; bottom:-140px; right:-100px; animation:drift2 26s ease-in-out infinite alternate; }
-  .b3 { width:300px; height:300px; background:#ff4d8d; top:40%; left:55%; animation:drift3 30s ease-in-out infinite alternate; }
-  @keyframes drift1 { to { transform:translate(140px,120px) scale(1.15); } }
-  @keyframes drift2 { to { transform:translate(-120px,-140px) scale(1.1); } }
-  @keyframes drift3 { to { transform:translate(-160px,100px) scale(0.85); } }
+  body { font-family:'Outfit',system-ui,sans-serif; background:var(--bg); color:var(--text); overflow-x:hidden; line-height:1.6; }
+  ::selection { background:var(--brand); color:#fff; }
 
-  /* zero-gravity floating particles */
-  .particle { position:fixed; border-radius:50%; background:rgba(255,255,255,.5); z-index:0; pointer-events:none; animation:floatUp linear infinite; }
+  /* ambient anti-gravity background */
+  .glow { position:fixed; border-radius:50%; filter:blur(110px); opacity:.30; z-index:0; pointer-events:none; }
+  .g1 { width:520px; height:520px; background:var(--brand); top:-160px; left:-140px; animation:drift1 24s ease-in-out infinite alternate; }
+  .g2 { width:440px; height:440px; background:var(--brand2); bottom:-160px; right:-120px; animation:drift2 28s ease-in-out infinite alternate; }
+  .g3 { width:300px; height:300px; background:var(--brand3); top:45%; left:60%; animation:drift3 32s ease-in-out infinite alternate; }
+  @keyframes drift1 { to { transform:translate(150px,130px) scale(1.15); } }
+  @keyframes drift2 { to { transform:translate(-130px,-150px) scale(1.1); } }
+  @keyframes drift3 { to { transform:translate(-170px,110px) scale(.85); } }
+  .particle { position:fixed; border-radius:50%; background:rgba(255,255,255,.45); z-index:0; pointer-events:none; animation:floatUp linear infinite; }
   @keyframes floatUp {
-    0% { transform:translateY(105vh) translateX(0); opacity:0; }
-    10% { opacity:.7; }
-    90% { opacity:.5; }
-    100% { transform:translateY(-10vh) translateX(40px); opacity:0; }
+    0% { transform:translateY(105vh); opacity:0; }
+    12% { opacity:.6; } 88% { opacity:.4; }
+    100% { transform:translateY(-8vh) translateX(40px); opacity:0; }
   }
 
-  .wrap { position:relative; z-index:1; max-width:960px; margin:0 auto; padding:0 24px; }
+  .wrap { position:relative; z-index:1; max-width:1020px; margin:0 auto; padding:0 24px; }
 
-  nav { display:flex; justify-content:space-between; align-items:center; padding:28px 0; }
-  nav .logo { font-weight:800; font-size:1.15rem; letter-spacing:.5px; }
-  nav .logo span { color:#00c9a7; }
-  nav a.btn { background:#6c3df5; color:#fff; text-decoration:none; padding:10px 20px; border-radius:999px; font-size:.9rem; font-weight:600; transition:transform .25s, box-shadow .25s; }
-  nav a.btn:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(108,61,245,.45); }
+  /* navbar */
+  .navbar-wrapper { position:fixed; top:0; left:0; right:0; z-index:50; backdrop-filter:blur(14px); background:rgba(7,7,15,.65); border-bottom:1px solid var(--line); }
+  .nav-container { max-width:1020px; margin:0 auto; padding:16px 24px; display:flex; justify-content:space-between; align-items:center; }
+  .nav-logo { font-weight:800; font-size:1.1rem; text-decoration:none; color:var(--text); letter-spacing:.3px; }
+  .nav-logo span { color:var(--brand2); }
+  .nav-links-desktop { display:flex; gap:28px; align-items:center; }
+  .nav-link { color:var(--muted); text-decoration:none; font-size:.92rem; font-weight:500; transition:color .2s; }
+  .nav-link:hover { color:var(--text); }
+  .nav-cta { background:var(--brand); color:#fff !important; padding:9px 20px; border-radius:999px; font-weight:600; transition:transform .25s, box-shadow .25s; }
+  .nav-cta:hover { transform:translateY(-2px); box-shadow:0 10px 26px rgba(124,92,255,.4); }
+  @media (max-width:720px) { .nav-links-desktop .nav-link:not(.nav-cta) { display:none; } }
 
-  header.hero { min-height:78vh; display:flex; flex-direction:column; justify-content:center; padding:40px 0 80px; }
-  .hero .tag { display:inline-block; background:rgba(0,201,167,.12); color:#00c9a7; border:1px solid rgba(0,201,167,.35); padding:6px 16px; border-radius:999px; font-size:.82rem; font-weight:600; margin-bottom:22px; width:fit-content; animation:hover 4s ease-in-out infinite; }
-  .hero h1 { font-size:clamp(2.6rem, 7vw, 4.6rem); line-height:1.05; font-weight:800; letter-spacing:-1px; }
-  .hero h1 .grad { background:linear-gradient(90deg,#6c3df5,#ff4d8d,#00c9a7); -webkit-background-clip:text; background-clip:text; color:transparent; }
-  .hero p { margin-top:22px; max-width:560px; color:#a8a8c0; font-size:1.08rem; line-height:1.7; }
-  .hero .cta { margin-top:34px; display:flex; gap:16px; flex-wrap:wrap; }
-  .hero .cta a { text-decoration:none; font-weight:600; padding:14px 28px; border-radius:999px; transition:transform .25s, box-shadow .25s; }
-  .hero .cta a:hover { transform:translateY(-4px); }
-  .hero .cta .primary { background:#00c9a7; color:#062a24; box-shadow:0 8px 28px rgba(0,201,167,.3); }
-  .hero .cta .ghost { border:1px solid #3a3a52; color:#e8e8f0; }
-  .hero .cta .ghost:hover { border-color:#6c3df5; box-shadow:0 8px 28px rgba(108,61,245,.25); }
+  section { padding:96px 0 30px; }
+  .section-title { font-size:clamp(1.8rem,4.5vw,2.5rem); font-weight:800; letter-spacing:-.5px; margin-bottom:14px; }
+  .section-title em { font-style:normal; background:linear-gradient(90deg,var(--brand),var(--brand3),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .section-kicker { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--brand2); letter-spacing:2.5px; text-transform:uppercase; margin-bottom:10px; }
+  .section-sub { color:var(--muted); max-width:620px; margin-bottom:44px; }
 
-  @keyframes hover { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+  /* hero */
+  #hero { min-height:100vh; display:flex; align-items:center; padding-top:120px; }
+  .hero-inner { max-width:760px; }
+  .hero-badge { display:inline-flex; align-items:center; gap:8px; background:rgba(0,212,184,.1); border:1px solid rgba(0,212,184,.35); color:var(--brand2); padding:7px 18px; border-radius:999px; font-size:.82rem; font-weight:600; margin-bottom:26px; animation:hover 4s ease-in-out infinite; }
+  .hero-badge .dot { width:8px; height:8px; border-radius:50%; background:var(--brand2); animation:pulse 2s infinite; }
+  @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.35; } }
+  .hero-title { font-size:clamp(2.8rem,7.5vw,4.8rem); line-height:1.04; font-weight:900; letter-spacing:-1.5px; }
+  .hero-title .grad { background:linear-gradient(90deg,var(--brand),var(--brand3),var(--brand2)); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero-role { font-family:'JetBrains Mono',monospace; color:var(--muted); font-size:clamp(.95rem,2vw,1.1rem); margin-top:20px; }
+  .hero-role b { color:var(--text); font-weight:600; }
+  .hero-desc { color:var(--muted); margin-top:20px; font-size:1.06rem; max-width:580px; }
+  .hero-cta { display:flex; gap:16px; margin-top:38px; flex-wrap:wrap; }
+  .btn { text-decoration:none; font-weight:600; padding:14px 30px; border-radius:999px; font-size:.98rem; transition:transform .25s, box-shadow .25s, border-color .25s; display:inline-flex; align-items:center; gap:9px; }
+  .btn:hover { transform:translateY(-4px); }
+  .btn-primary { background:var(--brand2); color:#052a24; box-shadow:0 10px 30px rgba(0,212,184,.28); }
+  .btn-outline { border:1px solid var(--line); color:var(--text); }
+  .btn-outline:hover { border-color:var(--brand); box-shadow:0 10px 30px rgba(124,92,255,.22); }
+  @keyframes hover { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-9px); } }
 
-  section { padding:70px 0; }
-  .section-title { font-size:.85rem; text-transform:uppercase; letter-spacing:3px; color:#00c9a7; font-weight:700; margin-bottom:10px; }
-  .section-heading { font-size:clamp(1.7rem,4vw,2.4rem); font-weight:800; margin-bottom:40px; letter-spacing:-.5px; }
+  /* about */
+  .about-grid { display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  @media (max-width:720px) { .about-grid { grid-template-columns:1fr; } }
+  .about-card { background:var(--surface); border:1px solid var(--line); border-radius:20px; padding:30px; transition:transform .3s, border-color .3s; }
+  .about-card:hover { transform:translateY(-6px); border-color:rgba(124,92,255,.45); }
+  .about-card h3 { font-size:1.05rem; font-weight:700; margin-bottom:10px; display:flex; align-items:center; gap:10px; }
+  .about-card h3 .ico { width:34px; height:34px; border-radius:10px; display:grid; place-items:center; font-size:1rem; background:rgba(124,92,255,.15); border:1px solid rgba(124,92,255,.35); }
+  .about-card p { color:var(--muted); font-size:.94rem; }
 
-  /* floating project card */
-  .card {
-    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09);
-    border-radius:22px; padding:38px; backdrop-filter:blur(8px);
-    transition:transform .35s, border-color .35s, box-shadow .35s;
-    animation:hover 6s ease-in-out infinite;
-  }
-  .card:hover { transform:translateY(-10px) scale(1.01); border-color:rgba(108,61,245,.55); box-shadow:0 24px 60px rgba(108,61,245,.22); animation-play-state:paused; }
-  .card h3 { font-size:1.45rem; font-weight:800; margin-bottom:6px; }
-  .card .sub { color:#a8a8c0; font-size:.95rem; margin-bottom:22px; line-height:1.65; }
-  .chips { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
-  .chip { background:rgba(108,61,245,.14); border:1px solid rgba(108,61,245,.4); color:#c9b3ff; font-size:.78rem; font-weight:600; padding:6px 14px; border-radius:999px; }
-  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:28px; }
-  .stat { background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:18px; text-align:center; }
-  .stat .num { font-size:1.5rem; font-weight:800; color:#00c9a7; }
-  .stat .lbl { font-size:.78rem; color:#a8a8c0; margin-top:4px; }
-  .card .repo-link { display:inline-flex; align-items:center; gap:8px; color:#fff; text-decoration:none; font-weight:600; background:#1c1c2e; border:1px solid #3a3a52; padding:12px 24px; border-radius:999px; transition:transform .25s, border-color .25s; }
-  .card .repo-link:hover { transform:translateY(-3px); border-color:#00c9a7; }
+  /* skills */
+  .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:16px; }
+  .skill-group { background:var(--surface); border:1px solid var(--line); border-radius:18px; padding:24px; transition:transform .3s, border-color .3s; }
+  .skill-group:hover { transform:translateY(-6px); border-color:rgba(0,212,184,.45); }
+  .skill-group h4 { font-family:'JetBrains Mono',monospace; font-size:.8rem; color:var(--brand2); letter-spacing:1.5px; text-transform:uppercase; margin-bottom:14px; }
+  .skill-tags { display:flex; flex-wrap:wrap; gap:8px; }
+  .tag-chip { background:rgba(124,92,255,.12); border:1px solid rgba(124,92,255,.32); color:#cfc3ff; font-size:.8rem; font-weight:600; padding:5px 13px; border-radius:999px; }
 
-  .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; }
-  .skill { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:22px 16px; text-align:center; font-weight:700; font-size:.95rem; transition:transform .3s, border-color .3s; }
-  .skill:hover { transform:translateY(-6px); border-color:rgba(0,201,167,.5); }
-  .skill:nth-child(odd) { animation:hover 5s ease-in-out infinite; }
-  .skill:nth-child(even) { animation:hover 5s ease-in-out infinite 1.2s; }
-  .skill small { display:block; color:#a8a8c0; font-weight:500; font-size:.75rem; margin-top:6px; }
+  /* projects */
+  .project-card { background:var(--surface); border:1px solid var(--line); border-radius:22px; padding:36px; margin-bottom:24px; backdrop-filter:blur(8px); transition:transform .35s, border-color .35s, box-shadow .35s; animation:hover 7s ease-in-out infinite; }
+  .project-card:hover { transform:translateY(-8px); border-color:rgba(124,92,255,.5); box-shadow:0 26px 60px rgba(124,92,255,.18); animation-play-state:paused; }
+  .project-top { display:flex; justify-content:space-between; align-items:flex-start; gap:16px; flex-wrap:wrap; margin-bottom:8px; }
+  .project-card h3 { font-size:1.4rem; font-weight:800; }
+  .project-kind { font-family:'JetBrains Mono',monospace; font-size:.72rem; color:var(--brand3); border:1px solid rgba(255,92,138,.4); background:rgba(255,92,138,.1); padding:4px 12px; border-radius:999px; white-space:nowrap; }
+  .project-card .sub { color:var(--muted); font-size:.96rem; margin:12px 0 20px; }
+  .project-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:12px; margin-bottom:22px; }
+  .pstat { background:rgba(0,0,0,.32); border:1px solid rgba(255,255,255,.07); border-radius:13px; padding:15px; text-align:center; }
+  .pstat .num { font-size:1.35rem; font-weight:800; color:var(--brand2); }
+  .pstat .lbl { font-size:.74rem; color:var(--muted); margin-top:3px; }
+  .project-link { color:var(--text); text-decoration:none; font-weight:600; font-size:.94rem; display:inline-flex; align-items:center; gap:8px; border-bottom:1px solid var(--brand2); padding-bottom:2px; transition:gap .2s, color .2s; }
+  .project-link:hover { gap:13px; color:var(--brand2); }
 
-  footer { text-align:center; padding:60px 0 40px; color:#a8a8c0; font-size:.88rem; }
-  footer a { color:#00c9a7; text-decoration:none; font-weight:600; }
+  /* contact */
+  #contact { padding-bottom:110px; }
+  .contact-card { background:linear-gradient(135deg,rgba(124,92,255,.14),rgba(0,212,184,.08)); border:1px solid rgba(124,92,255,.3); border-radius:24px; padding:54px 40px; text-align:center; }
+  .contact-card p { color:var(--muted); max-width:480px; margin:14px auto 30px; }
+  footer { border-top:1px solid var(--line); padding:28px 0; text-align:center; color:var(--muted); font-size:.85rem; }
+  footer a { color:var(--brand2); text-decoration:none; }
 
-  @media (max-width:600px) {
-    .card { padding:26px; }
-    nav .logo { font-size:1rem; }
-  }
+  /* reveal on scroll */
+  .reveal { opacity:0; transform:translateY(28px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.visible { opacity:1; transform:translateY(0); }
 </style>
 </head>
 <body>
-  <div class="blob b1"></div>
-  <div class="blob b2"></div>
-  <div class="blob b3"></div>
+  <div class="glow g1"></div>
+  <div class="glow g2"></div>
+  <div class="glow g3"></div>
   <div id="particles"></div>
 
-  <div class="wrap">
-    <nav>
-      <div class="logo">Belal<span>.</span>Mahmoud</div>
-      <a class="btn" href="https://github.com/belal0155" target="_blank" rel="noopener">GitHub</a>
+  <div class="navbar-wrapper">
+    <nav class="nav-container">
+      <a class="nav-logo" href="#hero">Belal<span>.</span>Mahmoud</a>
+      <div class="nav-links-desktop">
+        <a class="nav-link" href="#about">About</a>
+        <a class="nav-link" href="#skills">Skills</a>
+        <a class="nav-link" href="#projects">Projects</a>
+        <a class="nav-link" href="#contact">Contact</a>
+        <a class="nav-link nav-cta" href="https://github.com/belal0155" target="_blank" rel="noopener">GitHub</a>
+      </div>
     </nav>
-
-    <header class="hero">
-      <span class="tag">Data Science Student</span>
-      <h1>Turning raw data into <span class="grad">decisions</span>.</h1>
-      <p>I build end-to-end data projects in Python: cleaning messy data, querying it with SQL, exploring it visually, and training machine learning models that predict what happens next.</p>
-      <div class="cta">
-        <a class="primary" href="#project">View my project</a>
-        <a class="ghost" href="https://github.com/belal0155" target="_blank" rel="noopener">github.com/belal0155</a>
-      </div>
-    </header>
-
-    <section id="project">
-      <div class="section-title">Featured project</div>
-      <div class="section-heading">Customer Churn Analysis</div>
-      <div class="card">
-        <h3>Who's about to leave, and why</h3>
-        <p class="sub">An end-to-end churn study on 3,000 synthetic customers. Cleaned missing data, engineered features, answered business questions with SQL, and compared two machine learning models with cross-validation to predict which customers will churn.</p>
-        <div class="chips">
-          <span class="chip">Python</span>
-          <span class="chip">Pandas</span>
-          <span class="chip">SQL (SQLite)</span>
-          <span class="chip">scikit-learn</span>
-          <span class="chip">EDA</span>
-          <span class="chip">Matplotlib &amp; Seaborn</span>
-        </div>
-        <div class="stats">
-          <div class="stat"><div class="num">3,000</div><div class="lbl">customers analyzed</div></div>
-          <div class="stat"><div class="num">0.72</div><div class="lbl">best CV ROC-AUC</div></div>
-          <div class="stat"><div class="num">18.5%</div><div class="lbl">churn on basic plan</div></div>
-          <div class="stat"><div class="num">2</div><div class="lbl">models compared</div></div>
-        </div>
-        <a class="repo-link" href="https://github.com/belal0155/customer-churn-analysis" target="_blank" rel="noopener">See the code on GitHub &rarr;</a>
-      </div>
-    </section>
-
-    <section>
-      <div class="section-title">Toolbox</div>
-      <div class="section-heading">What I work with</div>
-      <div class="skills-grid">
-        <div class="skill">Python<small>analysis &amp; modeling</small></div>
-        <div class="skill">SQL<small>data questions</small></div>
-        <div class="skill">Pandas<small>data wrangling</small></div>
-        <div class="skill">scikit-learn<small>ML pipelines</small></div>
-        <div class="skill">Visualization<small>Matplotlib, Seaborn</small></div>
-        <div class="skill">Git &amp; GitHub<small>version control</small></div>
-      </div>
-    </section>
-
-    <footer>
-      Built by Belal Mahmoud &middot; <a href="https://github.com/belal0155" target="_blank" rel="noopener">GitHub</a>
-    </footer>
   </div>
 
+  <div class="wrap">
+
+    <section id="hero">
+      <div class="hero-inner">
+        <span class="hero-badge"><span class="dot"></span>Open to data science opportunities</span>
+        <h1 class="hero-title">Hi, I'm Belal.<br>I turn raw data into <span class="grad">clear answers</span>.</h1>
+        <p class="hero-role">Data Science Student &middot; <b>Python &middot; SQL &middot; Machine Learning</b></p>
+        <p class="hero-desc">I build end-to-end data projects: cleaning messy data, asking it questions with SQL, exploring it visually, and training models that predict what happens next.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="#projects">View my work &darr;</a>
+          <a class="btn btn-outline" href="https://github.com/belal0155" target="_blank" rel="noopener">github.com/belal0155</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="reveal">
+      <div class="section-kicker">About</div>
+      <h2 class="section-title">A student who <em>ships</em> projects</h2>
+      <p class="section-sub">I'm a data science student who learns by building: real notebooks, real repositories, real results.</p>
+      <div class="about-grid">
+        <div class="about-card">
+          <h3><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cfc3ff" stroke-width="2.4" stroke-linecap="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span>End-to-end workflow</h3>
+          <p>From raw CSV to a validated model: data cleaning, feature engineering, SQL analysis, exploratory plots and model comparison, all in reproducible code.</p>
+        </div>
+        <div class="about-card">
+          <h3><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cfc3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 19c.6-3 2.8-4.5 5.5-4.5s4.9 1.5 5.5 4.5"/><circle cx="17" cy="9" r="2.6"/><path d="M16 14.6c2.4.2 4 1.6 4.5 4.4"/></svg></span>Team experience</h3>
+          <p>I own the EDA phase of a university team project on e-commerce customer value prediction, working through GitHub pull requests and code review with my teammates.</p>
+        </div>
+        <div class="about-card">
+          <h3><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cfc3ff" stroke-width="2.2" stroke-linecap="round"><circle cx="12" cy="12" r="3.4"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5 5l2.1 2.1M16.9 16.9L19 19M19 5l-2.1 2.1M7.1 16.9L5 19"/></svg></span>Engineering habits</h3>
+          <p>Single-command reproducible scripts, fixed random seeds, held-out test sets, cross-validation and clear READMEs on every repository.</p>
+        </div>
+        <div class="about-card">
+          <h3><span class="ico"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#cfc3ff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15.5c5.5-3.5 7-9.5 7-12.5-3 0-9 1.5-12.5 7L4 12.5 9 14l1.5 5z"/><circle cx="14.5" cy="9.5" r="1.6"/><path d="M6 18c-1.5 1.5-2 4-2 4s2.5-.5 4-2"/></svg></span>Currently</h3>
+          <p>Deepening my machine learning fundamentals and growing my project portfolio one repo at a time.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills" class="reveal">
+      <div class="section-kicker">Toolbox</div>
+      <h2 class="section-title">Skills &amp; <em>technologies</em></h2>
+      <p class="section-sub">The tools I use across my projects.</p>
+      <div class="skills-grid">
+        <div class="skill-group">
+          <h4>Languages</h4>
+          <div class="skill-tags"><span class="tag-chip">Python</span><span class="tag-chip">SQL</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Data analysis</h4>
+          <div class="skill-tags"><span class="tag-chip">Pandas</span><span class="tag-chip">NumPy</span><span class="tag-chip">SQLite</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Visualization</h4>
+          <div class="skill-tags"><span class="tag-chip">Matplotlib</span><span class="tag-chip">Seaborn</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Machine learning</h4>
+          <div class="skill-tags"><span class="tag-chip">scikit-learn</span><span class="tag-chip">Pipelines</span><span class="tag-chip">Cross-validation</span></div>
+        </div>
+        <div class="skill-group">
+          <h4>Workflow</h4>
+          <div class="skill-tags"><span class="tag-chip">Git &amp; GitHub</span><span class="tag-chip">VS Code</span><span class="tag-chip">Jupyter</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="reveal">
+      <div class="section-kicker">Portfolio</div>
+      <h2 class="section-title">Selected <em>projects</em></h2>
+      <p class="section-sub">Each project is fully reproducible from its repository.</p>
+
+      <div class="project-card">
+        <div class="project-top">
+          <h3>Customer Churn Analysis</h3>
+          <span class="project-kind">Solo project</span>
+        </div>
+        <p class="sub">End-to-end churn study on 3,000 synthetic customers. Cleaned missing data, engineered features, answered business questions with SQL, then compared Logistic Regression and Random Forest pipelines with 5-fold cross-validation and a held-out test set. Finding: basic-plan customers churn the most (18.5% vs ~12.5% on other plans).</p>
+        <div class="project-stats">
+          <div class="pstat"><div class="num">3,000</div><div class="lbl">customers analyzed</div></div>
+          <div class="pstat"><div class="num">0.72</div><div class="lbl">best CV ROC-AUC</div></div>
+          <div class="pstat"><div class="num">18.5%</div><div class="lbl">churn on basic plan</div></div>
+          <div class="pstat"><div class="num">2</div><div class="lbl">models compared</div></div>
+        </div>
+        <div class="skill-tags" style="margin-bottom:22px"><span class="tag-chip">Python</span><span class="tag-chip">Pandas</span><span class="tag-chip">SQL</span><span class="tag-chip">scikit-learn</span><span class="tag-chip">EDA</span></div>
+        <br>
+        <a class="project-link" href="https://github.com/belal0155/customer-churn-analysis" target="_blank" rel="noopener">View repository &rarr;</a>
+      </div>
+
+      <div class="project-card">
+        <div class="project-top">
+          <h3>E-Commerce Customer Value Prediction</h3>
+          <span class="project-kind">Team project &middot; EDA lead</span>
+        </div>
+        <p class="sub">University team project predicting e-commerce customer value. I own the exploratory data analysis phase: loading and quality-checking the dataset, cleaning it, and building the first analysis notebook that the modeling phase builds on. Collaborating through GitHub branches, pull requests and code review.</p>
+        <div class="skill-tags" style="margin-bottom:22px"><span class="tag-chip">Python</span><span class="tag-chip">Pandas</span><span class="tag-chip">Jupyter</span><span class="tag-chip">Data cleaning</span><span class="tag-chip">Git workflow</span></div>
+        <br>
+        <a class="project-link" href="https://github.com/belal0155" target="_blank" rel="noopener">See my GitHub activity &rarr;</a>
+      </div>
+    </section>
+
+    <section id="contact" class="reveal">
+      <div class="section-kicker">Contact</div>
+      <h2 class="section-title">Let's build something <em>together</em></h2>
+      <div class="contact-card">
+        <h3 style="font-size:1.3rem;font-weight:800">Want to see more of my work?</h3>
+        <p>My GitHub has my latest projects, notebooks and code. It is the best place to see what I'm building right now.</p>
+        <a class="btn btn-primary" href="https://github.com/belal0155" target="_blank" rel="noopener">Visit my GitHub &rarr;</a>
+      </div>
+    </section>
+
+  </div>
+
+  <footer>
+    &copy; 2026 Belal Mahmoud &middot; <a href="https://github.com/belal0155" target="_blank" rel="noopener">GitHub</a>
+  </footer>
+
 <script>
-  // zero-gravity dust particles
+  // zero-gravity dust
   const container = document.getElementById('particles');
-  for (let i = 0; i < 28; i++) {
+  for (let i = 0; i < 26; i++) {
     const p = document.createElement('div');
     p.className = 'particle';
     const size = Math.random() * 4 + 2;
@@ -169,6 +268,11 @@
     p.style.animationDelay = (Math.random() * 14) + 's';
     container.appendChild(p);
   }
+  // reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
 </script>
 </body>
 </html>
