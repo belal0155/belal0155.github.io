@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Belal Mahmoud — Data Science</title>
+<meta name="description" content="Portfolio of Belal Mahmoud, data science student. Customer churn analysis with Python, SQL and machine learning.">
+<style>
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; }
+  body {
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    background:#0a0a12; color:#e8e8f0; overflow-x:hidden;
+  }
+  /* floating background blobs */
+  .blob { position:fixed; border-radius:50%; filter:blur(90px); opacity:.35; z-index:0; pointer-events:none; }
+  .b1 { width:480px; height:480px; background:#6c3df5; top:-120px; left:-120px; animation:drift1 22s ease-in-out infinite alternate; }
+  .b2 { width:420px; height:420px; background:#00c9a7; bottom:-140px; right:-100px; animation:drift2 26s ease-in-out infinite alternate; }
+  .b3 { width:300px; height:300px; background:#ff4d8d; top:40%; left:55%; animation:drift3 30s ease-in-out infinite alternate; }
+  @keyframes drift1 { to { transform:translate(140px,120px) scale(1.15); } }
+  @keyframes drift2 { to { transform:translate(-120px,-140px) scale(1.1); } }
+  @keyframes drift3 { to { transform:translate(-160px,100px) scale(0.85); } }
+
+  /* zero-gravity floating particles */
+  .particle { position:fixed; border-radius:50%; background:rgba(255,255,255,.5); z-index:0; pointer-events:none; animation:floatUp linear infinite; }
+  @keyframes floatUp {
+    0% { transform:translateY(105vh) translateX(0); opacity:0; }
+    10% { opacity:.7; }
+    90% { opacity:.5; }
+    100% { transform:translateY(-10vh) translateX(40px); opacity:0; }
+  }
+
+  .wrap { position:relative; z-index:1; max-width:960px; margin:0 auto; padding:0 24px; }
+
+  nav { display:flex; justify-content:space-between; align-items:center; padding:28px 0; }
+  nav .logo { font-weight:800; font-size:1.15rem; letter-spacing:.5px; }
+  nav .logo span { color:#00c9a7; }
+  nav a.btn { background:#6c3df5; color:#fff; text-decoration:none; padding:10px 20px; border-radius:999px; font-size:.9rem; font-weight:600; transition:transform .25s, box-shadow .25s; }
+  nav a.btn:hover { transform:translateY(-3px); box-shadow:0 10px 30px rgba(108,61,245,.45); }
+
+  header.hero { min-height:78vh; display:flex; flex-direction:column; justify-content:center; padding:40px 0 80px; }
+  .hero .tag { display:inline-block; background:rgba(0,201,167,.12); color:#00c9a7; border:1px solid rgba(0,201,167,.35); padding:6px 16px; border-radius:999px; font-size:.82rem; font-weight:600; margin-bottom:22px; width:fit-content; animation:hover 4s ease-in-out infinite; }
+  .hero h1 { font-size:clamp(2.6rem, 7vw, 4.6rem); line-height:1.05; font-weight:800; letter-spacing:-1px; }
+  .hero h1 .grad { background:linear-gradient(90deg,#6c3df5,#ff4d8d,#00c9a7); -webkit-background-clip:text; background-clip:text; color:transparent; }
+  .hero p { margin-top:22px; max-width:560px; color:#a8a8c0; font-size:1.08rem; line-height:1.7; }
+  .hero .cta { margin-top:34px; display:flex; gap:16px; flex-wrap:wrap; }
+  .hero .cta a { text-decoration:none; font-weight:600; padding:14px 28px; border-radius:999px; transition:transform .25s, box-shadow .25s; }
+  .hero .cta a:hover { transform:translateY(-4px); }
+  .hero .cta .primary { background:#00c9a7; color:#062a24; box-shadow:0 8px 28px rgba(0,201,167,.3); }
+  .hero .cta .ghost { border:1px solid #3a3a52; color:#e8e8f0; }
+  .hero .cta .ghost:hover { border-color:#6c3df5; box-shadow:0 8px 28px rgba(108,61,245,.25); }
+
+  @keyframes hover { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-8px); } }
+
+  section { padding:70px 0; }
+  .section-title { font-size:.85rem; text-transform:uppercase; letter-spacing:3px; color:#00c9a7; font-weight:700; margin-bottom:10px; }
+  .section-heading { font-size:clamp(1.7rem,4vw,2.4rem); font-weight:800; margin-bottom:40px; letter-spacing:-.5px; }
+
+  /* floating project card */
+  .card {
+    background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09);
+    border-radius:22px; padding:38px; backdrop-filter:blur(8px);
+    transition:transform .35s, border-color .35s, box-shadow .35s;
+    animation:hover 6s ease-in-out infinite;
+  }
+  .card:hover { transform:translateY(-10px) scale(1.01); border-color:rgba(108,61,245,.55); box-shadow:0 24px 60px rgba(108,61,245,.22); animation-play-state:paused; }
+  .card h3 { font-size:1.45rem; font-weight:800; margin-bottom:6px; }
+  .card .sub { color:#a8a8c0; font-size:.95rem; margin-bottom:22px; line-height:1.65; }
+  .chips { display:flex; flex-wrap:wrap; gap:10px; margin-bottom:26px; }
+  .chip { background:rgba(108,61,245,.14); border:1px solid rgba(108,61,245,.4); color:#c9b3ff; font-size:.78rem; font-weight:600; padding:6px 14px; border-radius:999px; }
+  .stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; margin-bottom:28px; }
+  .stat { background:rgba(0,0,0,.3); border:1px solid rgba(255,255,255,.07); border-radius:14px; padding:18px; text-align:center; }
+  .stat .num { font-size:1.5rem; font-weight:800; color:#00c9a7; }
+  .stat .lbl { font-size:.78rem; color:#a8a8c0; margin-top:4px; }
+  .card .repo-link { display:inline-flex; align-items:center; gap:8px; color:#fff; text-decoration:none; font-weight:600; background:#1c1c2e; border:1px solid #3a3a52; padding:12px 24px; border-radius:999px; transition:transform .25s, border-color .25s; }
+  .card .repo-link:hover { transform:translateY(-3px); border-color:#00c9a7; }
+
+  .skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:14px; }
+  .skill { background:rgba(255,255,255,.04); border:1px solid rgba(255,255,255,.09); border-radius:16px; padding:22px 16px; text-align:center; font-weight:700; font-size:.95rem; transition:transform .3s, border-color .3s; }
+  .skill:hover { transform:translateY(-6px); border-color:rgba(0,201,167,.5); }
+  .skill:nth-child(odd) { animation:hover 5s ease-in-out infinite; }
+  .skill:nth-child(even) { animation:hover 5s ease-in-out infinite 1.2s; }
+  .skill small { display:block; color:#a8a8c0; font-weight:500; font-size:.75rem; margin-top:6px; }
+
+  footer { text-align:center; padding:60px 0 40px; color:#a8a8c0; font-size:.88rem; }
+  footer a { color:#00c9a7; text-decoration:none; font-weight:600; }
+
+  @media (max-width:600px) {
+    .card { padding:26px; }
+    nav .logo { font-size:1rem; }
+  }
+</style>
+</head>
+<body>
+  <div class="blob b1"></div>
+  <div class="blob b2"></div>
+  <div class="blob b3"></div>
+  <div id="particles"></div>
+
+  <div class="wrap">
+    <nav>
+      <div class="logo">Belal<span>.</span>Mahmoud</div>
+      <a class="btn" href="https://github.com/belal0155" target="_blank" rel="noopener">GitHub</a>
+    </nav>
+
+    <header class="hero">
+      <span class="tag">Data Science Student</span>
+      <h1>Turning raw data into <span class="grad">decisions</span>.</h1>
+      <p>I build end-to-end data projects in Python: cleaning messy data, querying it with SQL, exploring it visually, and training machine learning models that predict what happens next.</p>
+      <div class="cta">
+        <a class="primary" href="#project">View my project</a>
+        <a class="ghost" href="https://github.com/belal0155" target="_blank" rel="noopener">github.com/belal0155</a>
+      </div>
+    </header>
+
+    <section id="project">
+      <div class="section-title">Featured project</div>
+      <div class="section-heading">Customer Churn Analysis</div>
+      <div class="card">
+        <h3>Who's about to leave, and why</h3>
+        <p class="sub">An end-to-end churn study on 3,000 synthetic customers. Cleaned missing data, engineered features, answered business questions with SQL, and compared two machine learning models with cross-validation to predict which customers will churn.</p>
+        <div class="chips">
+          <span class="chip">Python</span>
+          <span class="chip">Pandas</span>
+          <span class="chip">SQL (SQLite)</span>
+          <span class="chip">scikit-learn</span>
+          <span class="chip">EDA</span>
+          <span class="chip">Matplotlib &amp; Seaborn</span>
+        </div>
+        <div class="stats">
+          <div class="stat"><div class="num">3,000</div><div class="lbl">customers analyzed</div></div>
+          <div class="stat"><div class="num">0.72</div><div class="lbl">best CV ROC-AUC</div></div>
+          <div class="stat"><div class="num">18.5%</div><div class="lbl">churn on basic plan</div></div>
+          <div class="stat"><div class="num">2</div><div class="lbl">models compared</div></div>
+        </div>
+        <a class="repo-link" href="https://github.com/belal0155/customer-churn-analysis" target="_blank" rel="noopener">See the code on GitHub &rarr;</a>
+      </div>
+    </section>
+
+    <section>
+      <div class="section-title">Toolbox</div>
+      <div class="section-heading">What I work with</div>
+      <div class="skills-grid">
+        <div class="skill">Python<small>analysis &amp; modeling</small></div>
+        <div class="skill">SQL<small>data questions</small></div>
+        <div class="skill">Pandas<small>data wrangling</small></div>
+        <div class="skill">scikit-learn<small>ML pipelines</small></div>
+        <div class="skill">Visualization<small>Matplotlib, Seaborn</small></div>
+        <div class="skill">Git &amp; GitHub<small>version control</small></div>
+      </div>
+    </section>
+
+    <footer>
+      Built by Belal Mahmoud &middot; <a href="https://github.com/belal0155" target="_blank" rel="noopener">GitHub</a>
+    </footer>
+  </div>
+
+<script>
+  // zero-gravity dust particles
+  const container = document.getElementById('particles');
+  for (let i = 0; i < 28; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 4 + 2;
+    p.style.width = size + 'px';
+    p.style.height = size + 'px';
+    p.style.left = Math.random() * 100 + 'vw';
+    p.style.animationDuration = (Math.random() * 14 + 12) + 's';
+    p.style.animationDelay = (Math.random() * 14) + 's';
+    container.appendChild(p);
+  }
+</script>
+</body>
+</html>
