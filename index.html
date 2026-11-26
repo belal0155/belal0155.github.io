@@ -237,7 +237,7 @@
       <div class="skills-grid">
         <div class="skill-group">
           <h4>Languages</h4>
-          <div class="skill-tags"><span class="tag-chip">Python</span><span class="tag-chip">SQL</span></div>
+          <div class="skill-tags"><span class="tag-chip">Python</span></div>
         </div>
         <div class="skill-group">
           <h4>Data</h4>
@@ -272,14 +272,14 @@
           <h3>Customer Churn Analysis</h3>
           <span class="project-kind">Personal project</span>
         </div>
-        <p class="sub">Built a Python pipeline on a synthetic 3,000-customer dataset: Pandas/NumPy cleaning, an SQL query for churn by plan, and EDA plots. Compared Logistic Regression and Random Forest with 5-fold cross-validation; Logistic Regression scored a test ROC-AUC of 0.71 and was the better model. Finding: basic-plan customers churn the most (18.5% vs ~12.5% on other plans).</p>
+        <p class="sub">End-to-end churn project on the public IBM Telco dataset (7,043 customers). Cleaned the data with documented fixes, compared a baseline, Logistic Regression, Random Forest and XGBoost with 5-fold cross-validation, checked calibration, and explained predictions with SHAP. Turned the scores into a decision with a cost-based contact threshold. Finding: month-to-month customers churn at 42.7% vs 2.8% on two-year contracts, and the first year is the riskiest (47% churn).</p>
         <div class="project-stats">
-          <div class="pstat"><div class="num">3,000</div><div class="lbl">customers analyzed</div></div>
-          <div class="pstat"><div class="num">0.71</div><div class="lbl">test ROC-AUC</div></div>
-          <div class="pstat"><div class="num">18.5%</div><div class="lbl">churn on basic plan</div></div>
-          <div class="pstat"><div class="num">2</div><div class="lbl">models compared</div></div>
+          <div class="pstat"><div class="num">7,043</div><div class="lbl">customers analyzed</div></div>
+          <div class="pstat"><div class="num">0.85</div><div class="lbl">test ROC-AUC</div></div>
+          <div class="pstat"><div class="num">42.7%</div><div class="lbl">churn, month-to-month</div></div>
+          <div class="pstat"><div class="num">4</div><div class="lbl">models compared</div></div>
         </div>
-        <div class="skill-tags" style="margin-bottom:22px"><span class="tag-chip">Python</span><span class="tag-chip">Pandas</span><span class="tag-chip">SQL</span><span class="tag-chip">scikit-learn</span><span class="tag-chip">EDA</span></div>
+        <div class="skill-tags" style="margin-bottom:22px"><span class="tag-chip">Python</span><span class="tag-chip">Pandas</span><span class="tag-chip">scikit-learn</span><span class="tag-chip">XGBoost</span><span class="tag-chip">SHAP</span><span class="tag-chip">EDA</span></div>
         <br>
         <a class="project-link" href="churn-demo/">Live demo &rarr;</a> &nbsp;&nbsp; <a class="project-link" href="https://github.com/belal0155/customer-churn-analysis" target="_blank" rel="noopener" style="border-color:#555">Code on GitHub</a>
       </div>
