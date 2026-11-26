@@ -38,7 +38,7 @@ footer{margin-top:60px;color:#9a9db5;font-size:.85rem}
 <div class="note"><b>Data:</b> IBM Telco Customer Churn sample dataset (public, published for learning). Not production data from a company. <a href="https://github.com/belal0155/customer-churn-analysis">Code on GitHub</a>.</div>
 <div class="grid">
 <div class="st"><b>7,043</b><span>customers</span></div><div class="st"><b>26.5%</b><span>churned</span></div>
-<div class="st"><b>0.85</b><span>ROC-AUC (held-out)</span></div><div class="st"><b>4</b><span>models compared</span></div><div class="st"><b>$67.8k</b><span>vs $55.7k contact-all</span></div>
+<div class="st"><b>0.85</b><span>ROC-AUC (held-out)</span></div><div class="st"><b>4</b><span>models compared</span></div><div class="st"><b>$67.8k</b><span>simulated expected profit vs $55.7k contact-all (assumed costs)</span></div>
 </div>
 
 <h2>Try the predictor</h2>
@@ -89,7 +89,7 @@ footer{margin-top:60px;color:#9a9db5;font-size:.85rem}
 <p class="s" style="margin-top:12px">SHAP values from the XGBoost model. Each dot is a customer. Month-to-month contracts, short tenure, fiber optic and electronic-check payment push toward churn.</p></div>
 
 <h2>From scores to a business decision</h2>
-<div class="card"><p class="s">A retention offer costs $30 per contacted customer, saves 30% of those who would really leave, and a saved customer is worth 12 months of their bill (assumptions, editable in the code). Contacting customers above a churn probability of 0.14 gives about <b>$67.8k</b> expected profit on the test set versus $55.7k for contacting everyone, at 91% recall and 44% precision.</p>
+<div class="card"><p class="s">A retention offer costs $30 per contacted customer, saves 30% of those who would really leave, and a saved customer is worth 12 months of their bill (assumptions, editable in the code). Contacting customers above a churn probability of 0.14 gives a <b>simulated expected profit</b> of about <b>$67.8k</b> on the test set versus $55.7k for contacting everyone, at 91% recall and 44% precision. These dollars are simulated from the assumed costs above on a public sample dataset. They are not real revenue.</p>
 <img class="fig" src="https://raw.githubusercontent.com/belal0155/customer-churn-analysis/main/reports/figures/04_threshold_profit.png" alt="Expected profit by threshold" loading="lazy"></div>
 
 <h2>Limitations</h2>
